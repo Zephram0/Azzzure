@@ -25,45 +25,101 @@
 
         const paddleWidth = 10;
         const paddleHeight = 100;
+        const ballRadius = 8;
 
         let leftPaddle = { x: 10, y: canvas.height / 2 - paddleHeight / 2, dy: 0 };
         let rightPaddle = { x: canvas.width - 10 - paddleWidth, y: canvas.height / 2 - paddleHeight / 2, dy: 0 };
+        let ball = { x: canvas.width / 2, y: canvas.height / 2, dx: 5, dy: 5 };
+
+        let leftScore = 0;
+        let rightScore = 0;
 
         function drawPaddle(x, y) {
             context.fillStyle = 'white';
             context.fillRect(x, y, paddleWidth, paddleHeight);
         }
 
+        function drawBall(x, y) {
+            context.beginPath();
+            context.arc(x, y, ballRadius, 0, Math.PI * 2);
+            context.fillStyle = 'white';
+            context.fill();
+            context.closePath();
+        }
+
+        function drawScore() {
+            context.font = '32px sans-serif';
+            context.fillText(leftScore, canvas.width / 4, 50);
+            context.fillText(rightScore, canvas.width * 3 / 4, 50);
+        }
+
         function draw() {
             context.clearRect(0, 0, canvas.width, canvas.height);
             drawPaddle(leftPaddle.x, leftPaddle.y);
             drawPaddle(rightPaddle.x, rightPaddle.y);
+            drawBall(ball.x, ball.y);
+            drawScore();
         }
 
         function update() {
             leftPaddle.y += leftPaddle.dy;
             rightPaddle.y += rightPaddle.dy;
+            ball.x += ball.dx;
+            ball.y += ball.dy;
+
+            // Prevent paddles from going out of canvas
+            leftPaddle.y = Math.max(0, Math.min(canvas.height - paddleHeight, leftPaddle.y));
+            rightPaddle.y = Math.max(0, Math.min(canvas.height - paddleHeight, rightPaddle.y));
+
+            // Ball collision with top and bottom
+            if (ball.y - ballRadius < 0 || ball.y + ballRadius > canvas.height) {
+                ball.dy *= -1;
+            }
+
+            // Ball collision with paddles
+            if (
+                (ball.x - ballRadius < leftPaddle.x + paddleWidth && ball.y > leftPaddle.y && ball.y < leftPaddle.y + paddleHeight) ||
+                (ball.x + ballRadius > rightPaddle.x && ball.y > rightPaddle.y && ball.y < rightPaddle.y + paddleHeight)
+            ) {
+                ball.dx *= -1;
+            }
+
+            // Ball out of bounds, scoring
+            if (ball.x + ballRadius < 0) {
+                rightScore++;
+                resetBall();
+                        } else if (ball.x - ballRadius > canvas.width) {
+            leftScore++;
+            resetBall();
         }
+    }
 
-        function gameLoop() {
-            update();
-            draw();
-            requestAnimationFrame(gameLoop);
-        }
+    function resetBall() {
+        ball.x = canvas.width / 2;
+        ball.y = canvas.height / 2;
+        ball.dx *= -1;
+        ball.dy = 5;
+    }
 
-        gameLoop();
+    function gameLoop() {
+        update();
+        draw();
+        requestAnimationFrame(gameLoop);
+    }
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'w') leftPaddle.dy = -5;
-            if (e.key === 's') leftPaddle.dy = 5;
-            if (e.key === 'ArrowUp') rightPaddle.dy = -5;
-            if (e.key === 'ArrowDown') rightPaddle.dy = 5;
-        });
+    gameLoop();
 
-        document.addEventListener('keyup', (e) => {
-            if (e.key === 'w' || e.key === 's') leftPaddle.dy = 0;
-            if (e.key === 'ArrowUp' || e.key === 'ArrowDown') rightPaddle.dy = 0;
-        });
-    </script>
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'w') leftPaddle.dy = -5;
+        if (e.key === 's') leftPaddle.dy = 5;
+        if (e.key === 'ArrowUp') rightPaddle.dy = -5;
+        if (e.key === 'ArrowDown') rightPaddle.dy = 5;
+    });
+
+    document.addEventListener('keyup', (e) => {
+        if (e.key === 'w' || e.key === 's') leftPaddle.dy = 0;
+        if (e.key === 'ArrowUp' || e.key === 'ArrowDown') rightPaddle.dy = 0;
+    });
+</script>
 </body>
 </html>
