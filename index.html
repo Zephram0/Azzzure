@@ -1,62 +1,120 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Dad Jokes Galore</title>
-	<style>
-		body {
-			font-family: Arial, sans-serif;
-			background-color: #F9F9F9;
-		}
-		h1 {
-			text-align: center;
-			color: #2E4053;
-			margin-top: 50px;
-		}
-		.joke {
-			border: 1px solid #2E4053;
-			padding: 20px;
-			margin: 20px;
-			background-color: #FFFFFF;
-			border-radius: 5px;
-			box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-			transition: box-shadow 0.3s;
-		}
-		.joke:hover {
-			box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-		}
-	</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dad Jokes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F5F5F5;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #4CAF50;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            font-size: 1.2rem;
+            background-color: #FFF;
+            border: 1px solid #CCC;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 5px;
+        }
+        .punchline {
+            display: none;
+        }
+        button {
+            font-size: 1rem;
+            color: #FFF;
+            background-color: #4CAF50;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+        button:hover {
+            background-color: #3F9C45;
+        }
+        footer {
+            font-size: 0.9rem;
+            color: #999;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+    <script>
+        function showPunchline(id) {
+            var punchline = document.getElementById(id);
+            punchline.style.display = 'block';
+        }
+    </script>
 </head>
 <body>
-	<h1>Dad Jokes Galore</h1>
-	<div class="joke">
-		<p>Why did the scarecrow win an award? Because he was outstanding in his field!</p>
-	</div>
-	<div class="joke">
-		<p>What do you call fake spaghetti? An impasta.</p>
-	</div>
-	<div class="joke">
-		<p>Did you hear about the kidnapping at the playground? They woke up.</p>
-	</div>
-	<div class="joke">
-		<p>Why don't skeletons fight each other? They don't have the guts.</p>
-	</div>
-	<div class="joke">
-		<p>What do you call a can opener that doesn't work? A can't opener.</p>
-	</div>
-	<div class="joke">
-		<p>Why don't scientists trust atoms? Because they make up everything.</p>
-	</div>
-	<div class="joke">
-		<p>What's brown and sticky? A stick.</p>
-	</div>
-	<div class="joke">
-		<p>Why did the tomato turn red? Because it saw the salad dressing!</p>
-	</div>
-	<div class="joke">
-		<p>Why don't ants get sick? Because they have tiny ant-bodies.</p>
-	</div>
-	<div class="joke">
-		<p>What do you call a fish wearing a bowtie? Sofishticated.</p>
-	</div>
+    <h1>Dad Jokes</h1>
+    <ul>
+        <li>
+            Why don't scientists trust atoms?
+            <div class="punchline" id="joke1">Because they make up everything!</div>
+            <button onclick="showPunchline('joke1')">Show Punchline</button>
+        </li>
+        <li>
+            Why did the scarecrow win an award?
+            <div class="punchline" id="joke2">Because he was outstanding in his field!</div>
+            <button onclick="showPunchline('joke2')">Show Punchline</button>
+        </li>
+        <li>
+            Why don't some couples go to the gym?
+            <div class="punchline" id="joke3">Because some relationships don't work out.</div>
+            <button onclick="showPunchline('joke3')">Show Punchline</button>
+        </li>
+        <li>
+            Why did the math book look sad?
+            <div class="punchline" id="joke4">Because it had too many problems!</div>
+            <button onclick="showPunchline('joke4')">Show Punchline</button>
+        </li>
+        <li>
+            Why did the tomato turn red?
+            <div class="punchline" id="joke5">Because it saw the salad dressing!</div>
+            <button onclick="showPunchline('joke5')">Show Punchline</button>
+        </li>
+        <li>
+            Why did the golfer bring two pairs of pants?
+            <div class="punchline" id="joke6">In case he got a hole in one!</div>
+            <button onclick="showPunchline('joke6')">Show Punchline</button>
+	 </li>
+	 <li>
+            Why did the bicycle fall over?
+            <div class="punchline" id="joke7">Because it was two-tired!</div>
+            <button onclick="showPunchline('joke7')">Show Punchline</button>
+	 </li>
+	 <li>
+            What do you call fake spaghetti?
+            <div class="punchline" id="joke8">An impasta!</div>
+            <button onclick="showPunchline('joke8')">Show Punchline</button>
+	 </li>
+	 <li>
+            Why are frogs so happy?
+            <div class="punchline" id="joke9">Because they eat whatever bugs them!</div>
+            <button onclick="showPunchline('joke9')">Show Punchline</button>
+	 </li>
+	 <li>
+            Why did the cookie go to the hospital?
+            <div class="punchline" id="joke10">Because he felt crummy!</div>
+            <button onclick="showPunchline('joke10')">Show Punchline</button>
+	 </li>
+    </ul>
+<footer>&copy; 2023 Dad Jokes Inc. All rights reserved.</footer>
 </body>
 </html>
