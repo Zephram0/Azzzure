@@ -3,118 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dad Jokes</title>
+    <title>Pong Game</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #F5F5F5;
-            color: #333;
-            text-align: center;
+        html, body {
             margin: 0;
             padding: 0;
+            font-family: sans-serif;
         }
-        h1 {
-            font-size: 2.5rem;
-            color: #4CAF50;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            font-size: 1.2rem;
-            background-color: #FFF;
-            border: 1px solid #CCC;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-radius: 5px;
-        }
-        .punchline {
-            display: none;
-        }
-        button {
-            font-size: 1rem;
-            color: #FFF;
-            background-color: #4CAF50;
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 0.5rem;
-        }
-        button:hover {
-            background-color: #3F9C45;
-        }
-        footer {
-            font-size: 0.9rem;
-            color: #999;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
+        canvas {
+            display: block;
+            margin: 0 auto;
+            background-color: black;
         }
     </style>
-    <script>
-        function showPunchline(id) {
-            var punchline = document.getElementById(id);
-            punchline.style.display = 'block';
-        }
-    </script>
 </head>
 <body>
-    <h1>Dad Jokes</h1>
-    <ul>
-        <li>
-            Why don't scientists trust atoms?
-            <div class="punchline" id="joke1">Because they make up everything!</div>
-            <button onclick="showPunchline('joke1')">Show Punchline</button>
-        </li>
-        <li>
-            Why did the scarecrow win an award?
-            <div class="punchline" id="joke2">Because he was outstanding in his field!</div>
-            <button onclick="showPunchline('joke2')">Show Punchline</button>
-        </li>
-        <li>
-            Why don't some couples go to the gym?
-            <div class="punchline" id="joke3">Because some relationships don't work out.</div>
-            <button onclick="showPunchline('joke3')">Show Punchline</button>
-        </li>
-        <li>
-            Why did the math book look sad?
-            <div class="punchline" id="joke4">Because it had too many problems!</div>
-            <button onclick="showPunchline('joke4')">Show Punchline</button>
-        </li>
-        <li>
-            Why did the tomato turn red?
-            <div class="punchline" id="joke5">Because it saw the salad dressing!</div>
-            <button onclick="showPunchline('joke5')">Show Punchline</button>
-        </li>
-        <li>
-            Why did the golfer bring two pairs of pants?
-            <div class="punchline" id="joke6">In case he got a hole in one!</div>
-            <button onclick="showPunchline('joke6')">Show Punchline</button>
-	 </li>
-	 <li>
-            Why did the bicycle fall over?
-            <div class="punchline" id="joke7">Because it was two-tired!</div>
-            <button onclick="showPunchline('joke7')">Show Punchline</button>
-	 </li>
-	 <li>
-            What do you call fake spaghetti?
-            <div class="punchline" id="joke8">An impasta!</div>
-            <button onclick="showPunchline('joke8')">Show Punchline</button>
-	 </li>
-	 <li>
-            Why are frogs so happy?
-            <div class="punchline" id="joke9">Because they eat whatever bugs them!</div>
-            <button onclick="showPunchline('joke9')">Show Punchline</button>
-	 </li>
-	 <li>
-            Why did the cookie go to the hospital?
-            <div class="punchline" id="joke10">Because he felt crummy!</div>
-            <button onclick="showPunchline('joke10')">Show Punchline</button>
-	 </li>
-    </ul>
-<footer>&copy; 2023 Dad Jokes Inc. All rights reserved.</footer>
+    <canvas id="pong" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('pong');
+        const context = canvas.getContext('2d');
+
+        const paddleWidth = 10;
+        const paddleHeight = 100;
+
+        let leftPaddle = { x: 10, y: canvas.height / 2 - paddleHeight / 2, dy: 0 };
+        let rightPaddle = { x: canvas.width - 10 - paddleWidth, y: canvas.height / 2 - paddleHeight / 2, dy: 0 };
+
+        function drawPaddle(x, y) {
+            context.fillStyle = 'white';
+            context.fillRect(x, y, paddleWidth, paddleHeight);
+        }
+
+        function draw() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            drawPaddle(leftPaddle.x, leftPaddle.y);
+            drawPaddle(rightPaddle.x, rightPaddle.y);
+        }
+
+        function update() {
+            leftPaddle.y += leftPaddle.dy;
+            rightPaddle.y += rightPaddle.dy;
+        }
+
+        function gameLoop() {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+
+        gameLoop();
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'w') leftPaddle.dy = -5;
+            if (e.key === 's') leftPaddle.dy = 5;
+            if (e.key === 'ArrowUp') rightPaddle.dy = -5;
+            if (e.key === 'ArrowDown') rightPaddle.dy = 5;
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (e.key === 'w' || e.key === 's') leftPaddle.dy = 0;
+            if (e.key === 'ArrowUp' || e.key === 'ArrowDown') rightPaddle.dy = 0;
+        });
+    </script>
 </body>
 </html>
