@@ -81,8 +81,16 @@
                 (ball.x - ballRadius < leftPaddle.x + paddleWidth && ball.y > leftPaddle.y && ball.y < leftPaddle.y + paddleHeight) ||
                 (ball.x + ballRadius > rightPaddle.x && ball.y > rightPaddle.y && ball.y < rightPaddle.y + paddleHeight)
             ) {
-                ball.dx *= -1.1; // Increase ball speed by 10% on paddle collision
-                ball.dx *= 1.1;
+                // Increase ball speed by 10% on paddle collision
+                ball.dx *= -1.1;
+
+                // Adjust ball direction based on collision point on the paddle
+                let collidedPaddle = ball.x < canvas.width / 2 ? leftPaddle : rightPaddle;
+                let impactOffset = (ball.y - (collidedPaddle.y + paddleHeight / 2)) / (paddleHeight / 2);
+                let maxAngle = Math.PI / 4;
+                let angle = impactOffset * maxAngle;
+
+                ball.dy = ball.dx * Math.tan(angle);
             }
 
             // Ball out of bounds, scoring
@@ -99,8 +107,8 @@
     function resetBall() {
         ball.x = canvas.width / 2;
         ball.y = canvas.height / 2;
-        ball.dx *= -0.5;
-        ball.dy = 5;
+        ball.dx *= -0.7;
+        ball.dy *= 0.9;
     }
 
     function gameLoop() {
