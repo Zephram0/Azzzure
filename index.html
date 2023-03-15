@@ -81,16 +81,17 @@
                 (ball.x - ballRadius < leftPaddle.x + paddleWidth && ball.y > leftPaddle.y && ball.y < leftPaddle.y + paddleHeight) ||
                 (ball.x + ballRadius > rightPaddle.x && ball.y > rightPaddle.y && ball.y < rightPaddle.y + paddleHeight)
             ) {
-                ball.dx *= -1;
+                ball.dx *= -1.1; // Increase ball speed by 10% on paddle collision
             }
 
             // Ball out of bounds, scoring
             if (ball.x + ballRadius < 0) {
                 rightScore++;
                 resetBall();
-                        } else if (ball.x - ballRadius > canvas.width) {
-            leftScore++;
-            resetBall();
+            } else if (ball.x - ballRadius > canvas.width) {
+                leftScore++;
+                resetBall();
+            }
         }
     }
 
